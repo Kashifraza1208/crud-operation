@@ -1,6 +1,7 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Live demo of this project - https://crud-operation-psi.vercel.app/
+
+
 
 ## Available Scripts
 

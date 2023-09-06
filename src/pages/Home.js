@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 import { Link } from "react-router-dom";
-import { deleteUser } from "../components/redux/userReducer";
+import { deleteUser, loadUser } from "../components/redux/userAction";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const { users } = useSelector((state) => state.users);
 
-  const dispatch = useDispatch();
-
   const handleDelete = (id) => {
-    dispatch(deleteUser({ id }));
+    if (window.confirm("Are you sure want to delete?")) {
+      dispatch(deleteUser(id));
+    }
   };
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
 
   return (
     <div>
@@ -24,12 +31,14 @@ const Home = () => {
           </button>
         </Link>
       </div>
-      <table className="w-[90vw] lg:w-[70vw] h-[90vw] lg:h-[10vh] ml-8 lg:ml-36">
+      <table className="w-[90vw] lg:w-[80vw] h-[90vw] lg:h-[10vh] ml-8 lg:ml-36 overflew-x-scroll ">
         <thead className="border-b-2 ">
           <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Address</th>
+            <th>Contact</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -41,6 +50,9 @@ const Home = () => {
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
+                <td>{user.address}</td>
+                <td>{user.contact}</td>
+
                 <td>
                   <Link to={`/edit/${user.id}`}>
                     <button className="bg-blue-500 m-1 text-white font-bold px-3 py-1 rounded-lg">
